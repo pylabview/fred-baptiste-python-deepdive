@@ -1,0 +1,11 @@
+# requirements.txt
+jupyterlab
+pandas
+seaborn
+requests
+scikit-learn
+polars
+duckdb
+pyarrow
+shap
+ipywidgets
