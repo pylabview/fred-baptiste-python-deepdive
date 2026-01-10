@@ -3,7 +3,7 @@ def timed_n_times(fn, n):
 
     def inner(*args, **kwargs):
         total_elapsed = 0
-        for i in range(n):
+        for _i in range(n):
             start = perf_counter()
             result = fn(*args, **kwargs)
             elapsed = perf_counter() - start
