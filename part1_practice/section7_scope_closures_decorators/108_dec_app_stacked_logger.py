@@ -1,7 +1,7 @@
 ## Decorators ##
 def logged(fn):
-    from functools import wraps
     from datetime import datetime, timezone
+    from functools import wraps
 
     @wraps(fn)
     def inner(*args, **kwargs):
@@ -14,8 +14,8 @@ def logged(fn):
 
 
 def timed(fn):
-    from time import perf_counter
     from functools import wraps
+    from time import perf_counter
 
     @wraps(fn)
     def inner(*args, **kwargs):
@@ -95,8 +95,8 @@ def func2():
 @logged
 @timed
 def fact(n):
-    from operator import mul
     from functools import reduce
+    from operator import mul
 
     result = reduce(mul, range(1, n + 1))
     print(result)

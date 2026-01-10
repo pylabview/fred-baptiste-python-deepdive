@@ -1,5 +1,6 @@
 from functools import lru_cache
 
+
 def fib_recursive(n):
     print(f"Calculationg fib({n})")
     return 1 if n < 3 else fib_recursive(n - 1) + fib_recursive(n - 2)

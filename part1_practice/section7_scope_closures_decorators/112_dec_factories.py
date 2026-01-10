@@ -64,12 +64,12 @@ def timed(n):
 
         def inner(*args, **kwargs):
             total_elapsed = 0
-            for i in range(n):
+            for _ in range(n):
                 start = perf_counter()
                 result = fn(*args, **kwargs)
                 elapsed = perf_counter() - start
                 total_elapsed += elapsed
-            avg_run_time = total_elapsed / 10
+            avg_run_time = total_elapsed / n
             print(f"Average Run time {avg_run_time:0.7f} with {n} repetitions")
             return result
 
@@ -97,4 +97,4 @@ if __name__ == "__main__":
     # print(my_func())
     print("my_func_factory")
     print(my_func_factory())
-    print(fib_factory(30))
+    print(f"fib of 30: {fib_factory(30)}")
