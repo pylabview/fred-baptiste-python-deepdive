@@ -1,4 +1,3 @@
-from time import perf_counter
 from functools import lru_cache
 
 def fib_recursive(n):
