@@ -1,5 +1,7 @@
 from datetime import datetime, timezone
 from fractions import Fraction
+from functools import total_ordering
+from math import sqrt
 
 
 def my_func():
@@ -56,6 +58,100 @@ class Automobile:
                 self._speed = new_speed
 
 
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __abs__(self):
+        return sqrt(self.x**2 + self.y**2)
+
+    def __repr__(self):
+        return f"Point ({self.x}, {self.y})"
+
+    def __eq__(self, value):
+        if isinstance(value, Point):
+            return self.x == value.x and self.y == value.y
+        else:
+            return False
+
+    def __lt__(self, value):
+        if isinstance(value, Point):
+            return abs(self) < abs(value)
+        else:
+            return NotImplemented
+
+
+"""
+Now, although we could proceed in a similar way and define `>=`, `<=` and `>` 
+using the same technique, observe that if `<` and `==` is defined then:
+
+* `a <= b` iff `a < b or a == b`
+* `a > b` iff `not(a<b) and a != b`
+* `a >= b` iff `not(a<b)`
+        
+        
+"""
+
+
+def complete_ordering(cls):
+    if "__eq__" in dir(cls) and "__lt__" in dir(cls):
+        cls.__le__ = lambda self, value: self < value or self == value
+        cls.__gt__ = lambda self, value: not (self < value) and not (self == value)
+        cls.__ge__ = lambda self, value: not (self < value)
+    return cls
+
+
+@complete_ordering
+class PointDec:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __abs__(self):
+        return sqrt(self.x**2 + self.y**2)
+
+    def __repr__(self):
+        return f"Point ({self.x}, {self.y})"
+
+    def __eq__(self, value):
+        if isinstance(value, PointDec):
+            return self.x == value.x and self.y == value.y
+        else:
+            return False
+
+    def __lt__(self, value):
+        if isinstance(value, PointDec):
+            return abs(self) < abs(value)
+        else:
+            return NotImplemented
+
+
+@total_ordering
+class PointDecBuildIn:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __abs__(self):
+        return sqrt(self.x**2 + self.y**2)
+
+    def __repr__(self):
+        return f"Point ({self.x}, {self.y})"
+
+    def __eq__(self, value):
+        if isinstance(value, PointDecBuildIn):
+            return self.x == value.x and self.y == value.y
+        else:
+            return False
+
+    def __lt__(self, value):
+        if isinstance(value, PointDecBuildIn):
+            return abs(self) < abs(value)
+        else:
+            return NotImplemented
+
+
 if __name__ == "__main__":
     print("class decorator")
     Fraction = dec_speak(Fraction)
@@ -67,3 +163,22 @@ if __name__ == "__main__":
     print(p.debug())
     favorite = Automobile("toyota", "Highlander", 2025, 70)
     print(favorite.debug())
+    p1, p2, p3, p4 = Point(2, 3), Point(2, 3), Point(0, 0), Point(100, 200)
+    print(f"p1 == p2: {p1 == p2}")
+    print(f"p3 < p1: {p3 < p1}")
+    p5, p6, p7, p8 = PointDec(2, 3), PointDec(2, 3), PointDec(0, 0), PointDec(100, 200)
+    print(f"p5 {p5} p6 {p6} p7{p7} p8{p8}")
+    print(f"p5 <= p8: {p5 <= p8}")
+    print(f"p8 >= p6: {p8 >= p6}")
+    print(f"p5 != p6: {p5 != p6}")
+    print("------Now using the build in dec total_ordering form functools")
+    p9, p10, p11, p12 = (
+        PointDecBuildIn(2, 3),
+        PointDecBuildIn(2, 3),
+        PointDecBuildIn(0, 0),
+        PointDecBuildIn(100, 200),
+    )
+    print(f"p9 {p5} p10 {p6} p11{p7} p12{p8}")
+    print(f"p9 <= p12: {p9 <= p12}")
+    print(f"p12 >= p10: {p12 >= p10}")
+    print(f"p9 != p10: {p9 != p10}")
