@@ -1,5 +1,6 @@
 from decimal import Decimal
 from html import escape
+from numbers import Integral
 
 
 def my_func():
@@ -32,8 +33,16 @@ def html_dic(d):
     return "<ul>/n" + "\n".join(items) + "\n</ul>"
 
 
+def html_set(arg):
+    return html_list(arg)
+
+
+def htmlize_int(a):
+    return "{0}(<i>{1}</i)".format(a, str(hex(a)))
+
+
 def htmlize(arg):
-    if isinstance(arg, int):
+    if isinstance(arg, int) or isinstance(arg, Integral):
         return html_int(arg)
     elif isinstance(arg, float) or isinstance(arg, Decimal):
         return html_real(arg)
@@ -43,6 +52,8 @@ def htmlize(arg):
         return html_str(arg)
     elif isinstance(arg, list) or isinstance(arg, tuple):
         return html_list(arg)
+    elif isinstance(arg, set):
+        return html_set(arg)
     else:
         return html_escape(arg)
 
@@ -75,3 +86,5 @@ if __name__ == "__main__":
             ]
         )
     )
+    print("--------------------")
+    print(htmlize({1, 2, 3}))
