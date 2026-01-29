@@ -1,4 +1,4 @@
-# pbar_async.py
+# decorator_pbar_async.py
 import asyncio
 from functools import wraps
 
