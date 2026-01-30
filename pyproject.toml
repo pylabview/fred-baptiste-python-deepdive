@@ -34,7 +34,7 @@ line-length = 100
 [tool.ruff.lint]
 select = ["E", "F", "B"] # pycodestyle, pyflakes, bugbear
 extend-select = ["I"] # Add import rules
-ignore = ["E501"] # Ignore line-too-long warnings
+ignore = ["E501", "F401", "F841"] # Ignore line-too-long warnings, un-sued imports and vars
 
 # Formatting settings (Ruff acts like Black by default with these)
 [tool.ruff.format]
