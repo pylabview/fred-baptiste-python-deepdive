@@ -9,3 +9,6 @@ duckdb
 pyarrow
 shap
 ipywidgets
+torch
+torchvision
+dill
