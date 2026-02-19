@@ -69,6 +69,8 @@ keys = "abcd"
 values = range(1, 5)
 x_coordinates = (-2, -1, 0, 1, 2)
 y_coordinates = (-2, -1, 0, 1, 2)
+
+
 from math import hypot
 
 grid_coordinates_dict = {(x, y): hypot(x, y) for x, y in zip(x_coordinates, y_coordinates)}
